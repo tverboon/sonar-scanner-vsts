@@ -223,18 +223,9 @@ function HasElements
 #
 # Returns true if this build was triggered in response to a PR
 #
-# Remark: this logic is temporary until the platform provides a more robust way of determining PR builds; 
-# Note that PR builds are only supported on TfsGit
-#
 function IsPrBuild
-{    
-    $sourceBranch = $env:Build_SourceBranch
-    $scProvider = $env:Build_Repository_Provider
-
-    return   $scProvider -and `
-             ($scProvider -eq "TfsGit") -and `
-             $sourceBranch -and `
-             $sourceBranch.StartsWith("refs/pull/", [StringComparison]::OrdinalIgnoreCase)        
+{   
+    return $env:BUILD_REASON -eq ("PullRequest)
 }
 
 
